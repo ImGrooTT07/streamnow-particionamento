@@ -49,23 +49,3 @@ FROM reproducoes
 GROUP BY id_usuario
 ORDER BY minutos_totais DESC
 LIMIT 10;
-
--- Distribuição de reproduções por mês (análise temporal)
-SELECT
-    TO_CHAR(data_reproducao, 'YYYY-MM') AS mes,
-    COUNT(*) AS reproducoes_mes,
-    ROUND(SUM(duracao_segundos)/3600.0, 2) AS horas_totais
-FROM reproducoes
-GROUP BY mes
-ORDER BY mes;
-
--- Consulta combinada geral (visualização ampla)
-SELECT
-    EXTRACT(YEAR FROM data_reproducao) AS ano,
-    dispositivo,
-    COUNT(*) AS total_reproducoes,
-    ROUND(AVG(duracao_segundos), 2) AS media_duracao,
-    ROUND(SUM(duracao_segundos)/3600.0, 2) AS total_horas
-FROM reproducoes
-GROUP BY ano, dispositivo
-ORDER BY ano, total_reproducoes DESC;
